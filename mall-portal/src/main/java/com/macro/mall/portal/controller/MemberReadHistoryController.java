@@ -27,19 +27,15 @@ public class MemberReadHistoryController {
     @ApiOperation("创建浏览记录")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult create(@RequestBody MemberReadHistory memberReadHistory) {
+    public CommonResult<Integer> create(@RequestBody MemberReadHistory memberReadHistory) {
         int count = memberReadHistoryService.create(memberReadHistory);
-        if (count > 0) {
-            return CommonResult.success(count);
-        } else {
-            return CommonResult.failed();
-        }
+        return count > 0 ? CommonResult.success(count) : CommonResult.failed();
     }
 
     @ApiOperation("删除浏览记录")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult delete(@RequestParam("ids") List<String> ids) {
+    public CommonResult<Integer> delete(@RequestParam("ids") List<String> ids) {
         int count = memberReadHistoryService.delete(ids);
         if (count > 0) {
             return CommonResult.success(count);

@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  * 促销管理Service
- * Created by macro on 2018/8/27.
  */
 public interface OmsPromotionService {
     /**

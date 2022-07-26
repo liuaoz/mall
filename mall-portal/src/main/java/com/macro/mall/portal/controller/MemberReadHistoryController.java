@@ -15,27 +15,24 @@ import java.util.List;
 
 /**
  * 会员商品浏览记录管理Controller
- * Created by macro on 2018/8/3.
  */
-@Controller
-@Api(tags = "MemberReadHistoryController", description = "会员商品浏览记录管理")
+@RestController
+@Api(tags = "MemberReadHistoryController")
 @RequestMapping("/member/readHistory")
 public class MemberReadHistoryController {
     @Autowired
     private MemberReadHistoryService memberReadHistoryService;
 
     @ApiOperation("创建浏览记录")
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    @ResponseBody
+    @PostMapping
     public CommonResult<Integer> create(@RequestBody MemberReadHistory memberReadHistory) {
         int count = memberReadHistoryService.create(memberReadHistory);
         return count > 0 ? CommonResult.success(count) : CommonResult.failed();
     }
 
     @ApiOperation("删除浏览记录")
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    @ResponseBody
-    public CommonResult<Integer> delete(@RequestParam("ids") List<String> ids) {
+    @DeleteMapping
+    public CommonResult<Integer> delete(@RequestBody List<String> ids) {
         int count = memberReadHistoryService.delete(ids);
         if (count > 0) {
             return CommonResult.success(count);
@@ -45,18 +42,16 @@ public class MemberReadHistoryController {
     }
 
     @ApiOperation("清空浏览记录")
-    @RequestMapping(value = "/clear", method = RequestMethod.POST)
-    @ResponseBody
-    public CommonResult clear() {
+    @DeleteMapping("/clear")
+    public CommonResult<Integer> clear() {
         memberReadHistoryService.clear();
         return CommonResult.success(null);
     }
 
     @ApiOperation("分页获取浏览记录")
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @ResponseBody
-    public CommonResult<CommonPage<MemberReadHistory>> list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                                            @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
+    @GetMapping("/list")
+    public CommonResult<CommonPage<MemberReadHistory>> list(@RequestParam(defaultValue = "1") Integer pageNum,
+                                                            @RequestParam(defaultValue = "5") Integer pageSize) {
         Page<MemberReadHistory> page = memberReadHistoryService.list(pageNum, pageSize);
         return CommonResult.success(CommonPage.restPage(page));
     }

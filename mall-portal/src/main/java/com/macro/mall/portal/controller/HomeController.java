@@ -16,10 +16,9 @@ import java.util.List;
 
 /**
  * 首页内容管理Controller
- * Created by macro on 2019/1/28.
  */
 @RestController
-@Api(tags = "HomeController", description = "首页内容管理")
+@Api(tags = "HomeController")
 @RequestMapping("/home")
 public class HomeController {
     @Autowired
@@ -27,7 +26,6 @@ public class HomeController {
 
     @ApiOperation("首页内容信息展示")
     @GetMapping("/content")
-    @ResponseBody
     public CommonResult<HomeContentResult> content() {
         HomeContentResult contentResult = homeService.content();
         return CommonResult.success(contentResult);
@@ -35,16 +33,14 @@ public class HomeController {
 
     @ApiOperation("分页获取推荐商品")
     @GetMapping("/recommendProductList")
-    @ResponseBody
-    public CommonResult<List<PmsProduct>> recommendProductList(@RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize,
-                                                               @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+    public CommonResult<List<PmsProduct>> recommendProductList(@RequestParam(defaultValue = "4") Integer pageSize,
+                                                               @RequestParam(defaultValue = "1") Integer pageNum) {
         List<PmsProduct> productList = homeService.recommendProductList(pageSize, pageNum);
         return CommonResult.success(productList);
     }
 
     @ApiOperation("获取首页商品分类")
     @GetMapping("/productCateList/{parentId}")
-    @ResponseBody
     public CommonResult<List<PmsProductCategory>> getProductCateList(@PathVariable Long parentId) {
         List<PmsProductCategory> productCategoryList = homeService.getProductCateList(parentId);
         return CommonResult.success(productCategoryList);
@@ -52,28 +48,25 @@ public class HomeController {
 
     @ApiOperation("根据分类获取专题")
     @GetMapping("/subjectList")
-    @ResponseBody
     public CommonResult<List<CmsSubject>> getSubjectList(@RequestParam(required = false) Long cateId,
-                                                         @RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize,
-                                                         @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+                                                         @RequestParam(defaultValue = "4") Integer pageSize,
+                                                         @RequestParam(defaultValue = "1") Integer pageNum) {
         List<CmsSubject> subjectList = homeService.getSubjectList(cateId, pageSize, pageNum);
         return CommonResult.success(subjectList);
     }
 
     @ApiOperation("分页获取人气推荐商品")
     @GetMapping("/hotProductList")
-    @ResponseBody
-    public CommonResult<List<PmsProduct>> hotProductList(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                                         @RequestParam(value = "pageSize", defaultValue = "6") Integer pageSize) {
+    public CommonResult<List<PmsProduct>> hotProductList(@RequestParam(defaultValue = "1") Integer pageNum,
+                                                         @RequestParam(defaultValue = "6") Integer pageSize) {
         List<PmsProduct> productList = homeService.hotProductList(pageNum, pageSize);
         return CommonResult.success(productList);
     }
 
     @ApiOperation("分页获取新品推荐商品")
     @GetMapping("/newProductList")
-    @ResponseBody
-    public CommonResult<List<PmsProduct>> newProductList(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                                         @RequestParam(value = "pageSize", defaultValue = "6") Integer pageSize) {
+    public CommonResult<List<PmsProduct>> newProductList(@RequestParam(defaultValue = "1") Integer pageNum,
+                                                         @RequestParam(defaultValue = "6") Integer pageSize) {
         List<PmsProduct> productList = homeService.newProductList(pageNum, pageSize);
         return CommonResult.success(productList);
     }

@@ -13,19 +13,17 @@ import java.util.List;
 
 /**
  * 会员收货地址管理Controller
- * Created by macro on 2018/8/28.
  */
-@Controller
-@Api(tags = "UmsMemberReceiveAddressController", description = "会员收货地址管理")
+@RestController
+@Api(tags = "UmsMemberReceiveAddressController")
 @RequestMapping("/member/address")
 public class UmsMemberReceiveAddressController {
     @Autowired
     private UmsMemberReceiveAddressService memberReceiveAddressService;
 
     @ApiOperation("添加收货地址")
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @ResponseBody
-    public CommonResult add(@RequestBody UmsMemberReceiveAddress address) {
+    @PostMapping
+    public CommonResult<Integer> add(@RequestBody UmsMemberReceiveAddress address) {
         int count = memberReceiveAddressService.add(address);
         if (count > 0) {
             return CommonResult.success(count);
@@ -34,9 +32,8 @@ public class UmsMemberReceiveAddressController {
     }
 
     @ApiOperation("删除收货地址")
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    @ResponseBody
-    public CommonResult delete(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public CommonResult<Integer> delete(@PathVariable Long id) {
         int count = memberReceiveAddressService.delete(id);
         if (count > 0) {
             return CommonResult.success(count);
@@ -45,9 +42,8 @@ public class UmsMemberReceiveAddressController {
     }
 
     @ApiOperation("修改收货地址")
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    @ResponseBody
-    public CommonResult update(@PathVariable Long id, @RequestBody UmsMemberReceiveAddress address) {
+    @PutMapping("/{id}")
+    public CommonResult<Integer> update(@PathVariable Long id, @RequestBody UmsMemberReceiveAddress address) {
         int count = memberReceiveAddressService.update(id, address);
         if (count > 0) {
             return CommonResult.success(count);
@@ -56,16 +52,14 @@ public class UmsMemberReceiveAddressController {
     }
 
     @ApiOperation("显示所有收货地址")
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @ResponseBody
+    @GetMapping("/list")
     public CommonResult<List<UmsMemberReceiveAddress>> list() {
         List<UmsMemberReceiveAddress> addressList = memberReceiveAddressService.list();
         return CommonResult.success(addressList);
     }
 
     @ApiOperation("获取收货地址详情")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ResponseBody
+    @GetMapping("/{id}")
     public CommonResult<UmsMemberReceiveAddress> getItem(@PathVariable Long id) {
         UmsMemberReceiveAddress address = memberReceiveAddressService.getItem(id);
         return CommonResult.success(address);

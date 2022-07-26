@@ -17,10 +17,9 @@ import java.util.List;
 
 /**
  * 前台商品管理Controller
- * Created by macro on 2020/4/6.
  */
-@Controller
-@Api(tags = "PmsPortalProductController", description = "前台商品管理")
+@RestController
+@Api(tags = "PmsPortalProductController")
 @RequestMapping("/product")
 public class PmsPortalProductController {
 
@@ -30,8 +29,7 @@ public class PmsPortalProductController {
     @ApiOperation(value = "综合搜索、筛选、排序")
     @ApiImplicitParam(name = "sort", value = "排序字段:0->按相关度；1->按新品；2->按销量；3->价格从低到高；4->价格从高到低",
             defaultValue = "0", allowableValues = "0,1,2,3,4", paramType = "query", dataType = "integer")
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    @ResponseBody
+    @GetMapping("/search")
     public CommonResult<CommonPage<PmsProduct>> search(@RequestParam(required = false) String keyword,
                                                        @RequestParam(required = false) Long brandId,
                                                        @RequestParam(required = false) Long productCategoryId,
@@ -43,16 +41,14 @@ public class PmsPortalProductController {
     }
 
     @ApiOperation("以树形结构获取所有商品分类")
-    @RequestMapping(value = "/categoryTreeList", method = RequestMethod.GET)
-    @ResponseBody
+    @GetMapping("/categoryTreeList")
     public CommonResult<List<PmsProductCategoryNode>> categoryTreeList() {
         List<PmsProductCategoryNode> list = portalProductService.categoryTreeList();
         return CommonResult.success(list);
     }
 
     @ApiOperation("获取前台商品详情")
-    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-    @ResponseBody
+    @GetMapping("/{id}")
     public CommonResult<PmsPortalProductDetail> detail(@PathVariable Long id) {
         PmsPortalProductDetail productDetail = portalProductService.detail(id);
         return CommonResult.success(productDetail);

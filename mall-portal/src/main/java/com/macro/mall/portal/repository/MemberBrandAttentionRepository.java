@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
  * 会员品牌关注Repository
- * Created by macro on 2018/8/2.
  */
 public interface MemberBrandAttentionRepository extends MongoRepository<MemberBrandAttention, String> {
     /**

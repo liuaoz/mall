@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  * 优惠券领取历史详情（包括优惠券信息和关联关系）
- * Created by macro on 2018/8/29.
  */
 @Getter
 @Setter

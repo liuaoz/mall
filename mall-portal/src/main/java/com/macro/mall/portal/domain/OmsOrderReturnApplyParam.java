@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 
 /**
  * 退货申请请求参数
- * Created by macro on 2018/10/17.
  */
 @Getter
 @Setter

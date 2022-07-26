@@ -11,7 +11,6 @@ import java.util.List;
 
 /**
  * 确认单信息封装
- * Created by macro on 2018/8/30.
  */
 @Getter
 @Setter

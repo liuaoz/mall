@@ -49,16 +49,16 @@ secure:
 
 aliyun:
   oss:
-    endpoint: oss-cn-shenzhen.aliyuncs.com # oss对外服务的访问域名
-    accessKeyId: test # 访问身份验证中用到用户标识
-    accessKeySecret: test # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
-    bucketName: macro-oss # oss的存储空间
+    endpoint: oss-cn-shanghai.aliyuncs.com # oss对外服务的访问域名
+    accessKeyId: ${ALIYUN_ACCESS_KEY:test} # 访问身份验证中用到用户标识
+    accessKeySecret: ${ALIYUN_ACCESS_SECRET:test} # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
+    bucketName: bandao-bucket # oss的存储空间
     policy:
       expire: 300 # 签名有效期(S)
     maxSize: 10 # 上传文件大小(M)
     callback: http://39.98.190.128:8080/aliyun/oss/callback # 文件上传成功后的回调地址
     dir:
-      prefix: mall/images/ # 上传文件夹路径前缀
+      prefix: mall/bandao/images/ # 上传文件夹路径前缀
 
 minio:
   endpoint: http://192.168.3.101:9090 #MinIO服务所在地址

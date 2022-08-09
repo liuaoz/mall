@@ -19,7 +19,7 @@ import java.util.Map;
  * 会员登录注册管理Controller
  */
 @RestController
-@Api(tags = "UmsMemberController", description = "会员登录注册管理")
+@Api(tags = "UmsMemberController")
 @RequestMapping("/sso")
 public class UmsMemberController {
     @Value("${jwt.tokenHeader}")

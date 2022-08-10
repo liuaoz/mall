@@ -24,6 +24,9 @@ public interface UmsMemberService {
     @Transactional
     void register(String username, String password, String telephone, String authCode);
 
+    @Transactional
+    void register(String phone);
+
     /**
      * 生成验证码
      */
@@ -55,6 +58,11 @@ public interface UmsMemberService {
      * 登录后获取token
      */
     String login(String username, String password);
+
+    /**
+     * 登录后获取token, 微信一键登录
+     */
+    String login(String code, String encryptedData, String iv);
 
     /**
      * 刷新token

@@ -1,8 +1,12 @@
 package com.macro.mall.portal.controller;
 
+import cn.hutool.Hutool;
 import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.util.SafeUtil;
 import com.macro.mall.model.UmsMember;
+import com.macro.mall.portal.domain.LoginInfo;
 import com.macro.mall.portal.service.UmsMemberService;
+import com.macro.mall.portal.service.WxService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +33,19 @@ public class UmsMemberController {
     private String tokenHead;
     @Autowired
     private UmsMemberService memberService;
+
+    @Autowired
+    private WxService wxService;
+
+    @ApiOperation("登录/注册")
+    @PostMapping("loginByCode")
+    public CommonResult login(@RequestBody LoginInfo req) {
+        String token = memberService.login(req.getCode(), req.getEncryptedData(), req.getIv());
+        Map<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("token", token);
+        tokenMap.put("tokenHead", tokenHead);
+        return CommonResult.success(tokenMap);
+    }
 
     @ApiOperation("会员注册")
     @PostMapping("/register")

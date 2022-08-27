@@ -19,8 +19,8 @@ import java.util.List;
  * 商品管理Controller
  * Created by macro on 2018/4/26.
  */
-@Controller
-@Api(tags = "PmsProductController", description = "商品管理")
+@RestController
+@Api(tags = "PmsProductController")
 @RequestMapping("/product")
 public class PmsProductController {
     @Autowired

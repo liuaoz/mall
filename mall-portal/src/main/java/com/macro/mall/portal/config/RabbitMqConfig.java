@@ -16,7 +16,7 @@ public class RabbitMqConfig {
      */
     @Bean
     DirectExchange orderDirect() {
-        return (DirectExchange) ExchangeBuilder
+        return ExchangeBuilder
                 .directExchange(QueueEnum.QUEUE_ORDER_CANCEL.getExchange())
                 .durable(true)
                 .build();
@@ -27,7 +27,7 @@ public class RabbitMqConfig {
      */
     @Bean
     DirectExchange orderTtlDirect() {
-        return (DirectExchange) ExchangeBuilder
+        return ExchangeBuilder
                 .directExchange(QueueEnum.QUEUE_TTL_ORDER_CANCEL.getExchange())
                 .durable(true)
                 .build();

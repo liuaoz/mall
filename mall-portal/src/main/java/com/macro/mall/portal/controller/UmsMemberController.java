@@ -37,7 +37,7 @@ public class UmsMemberController {
     @Autowired
     private WxService wxService;
 
-    @ApiOperation("登录/注册")
+    @ApiOperation("登录/注册,微信一键登录")
     @PostMapping("loginByCode")
     public CommonResult login(@RequestBody LoginInfo req) {
         String token = memberService.login(req.getCode(), req.getEncryptedData(), req.getIv());

@@ -302,6 +302,7 @@ CREATE TABLE `oms_cart_item` (
   `product_brand` varchar(200) DEFAULT NULL,
   `product_sn` varchar(200) DEFAULT NULL,
   `product_attr` varchar(500) DEFAULT NULL COMMENT '商品销售属性:[{"key":"颜色","value":"颜色"},{"key":"容量","value":"4G"}]',
+  `selected` tinyint(1) DEFAULT 0 COMMENT '选中状态',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='购物车表';
 

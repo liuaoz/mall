@@ -1265,6 +1265,66 @@ public class OmsCartItemExample {
             addCriterion("product_attr not between", value1, value2, "productAttr");
             return (Criteria) this;
         }
+
+        public Criteria andSelectedIsNull() {
+            addCriterion("selected is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelectedIsNotNull() {
+            addCriterion("selected is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelectedEqualTo(Boolean value) {
+            addCriterion("selected =", value, "selected");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelectedNotEqualTo(Boolean value) {
+            addCriterion("selected <>", value, "selected");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelectedGreaterThan(Boolean value) {
+            addCriterion("selected >", value, "selected");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelectedGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("selected >=", value, "selected");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelectedLessThan(Boolean value) {
+            addCriterion("selected <", value, "selected");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelectedLessThanOrEqualTo(Boolean value) {
+            addCriterion("selected <=", value, "selected");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelectedIn(List<Boolean> values) {
+            addCriterion("selected in", values, "selected");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelectedNotIn(List<Boolean> values) {
+            addCriterion("selected not in", values, "selected");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelectedBetween(Boolean value1, Boolean value2) {
+            addCriterion("selected between", value1, value2, "selected");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelectedNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("selected not between", value1, value2, "selected");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

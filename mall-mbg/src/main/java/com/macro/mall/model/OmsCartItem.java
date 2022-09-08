@@ -54,6 +54,8 @@ public class OmsCartItem implements Serializable {
     @ApiModelProperty(value = "商品销售属性:[{'key':'颜色','value':'颜色'},{'key':'容量','value':'4G'}]")
     private String productAttr;
 
+    private Boolean selected;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -200,6 +202,14 @@ public class OmsCartItem implements Serializable {
         this.productAttr = productAttr;
     }
 
+    public Boolean getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -224,6 +234,7 @@ public class OmsCartItem implements Serializable {
         sb.append(", productBrand=").append(productBrand);
         sb.append(", productSn=").append(productSn);
         sb.append(", productAttr=").append(productAttr);
+        sb.append(", selected=").append(selected);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

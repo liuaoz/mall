@@ -52,10 +52,10 @@ public class OmsCartItemController {
     }
 
     @ApiOperation("修改购物车中指定商品的数量")
-    @PutMapping
-    public CommonResult<Integer> updateQuantity(@RequestParam Long id,//todo
-                                                @RequestParam Integer quantity) {
-        int count = cartItemService.updateQuantity(id, memberService.getCurrentMember().getId(), quantity);
+    @PutMapping("/{cartId}/{quantity}")
+    public CommonResult<Integer> updateQuantity(@PathVariable Long cartId,
+                                                @PathVariable Integer quantity) {
+        int count = cartItemService.updateQuantity(cartId, memberService.getCurrentMember().getId(), quantity);
         if (count > 0) {
             return CommonResult.success(count);
         }

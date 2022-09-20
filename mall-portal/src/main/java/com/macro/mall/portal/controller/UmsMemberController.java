@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 会员登录注册管理Controller
@@ -44,6 +45,10 @@ public class UmsMemberController {
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
+        if (Objects.nonNull(token)) {
+            var member = memberService.getCurrentMember();
+            tokenMap.put("username", member.getUsername());
+        }
         return CommonResult.success(tokenMap);
     }
 

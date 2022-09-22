@@ -51,6 +51,13 @@ public class OmsCartItemController {
         return CommonResult.success(cartPromotionItemList);
     }
 
+    @ApiOperation("修改购物车中指定商品的选中状态")
+    @PutMapping("/selected/{selected}")
+    public CommonResult<Integer> updateSelectedStatus(@PathVariable boolean selected, @RequestBody List<Long> ids) {
+        int count = cartItemService.updateSelectedStatus(ids, selected);
+        return CommonResult.success(count);
+    }
+
     @ApiOperation("修改购物车中指定商品的数量")
     @PutMapping("/{cartId}/{quantity}")
     public CommonResult<Integer> updateQuantity(@PathVariable Long cartId,
@@ -70,8 +77,8 @@ public class OmsCartItemController {
     }
 
     @ApiOperation("修改购物车中商品的规格")
-    @PutMapping("/update/attr")
-    public CommonResult<Integer> updateAttr(@RequestBody OmsCartItem cartItem) {
+    @PutMapping
+    public CommonResult<Integer> update(@RequestBody OmsCartItem cartItem) {
         int count = cartItemService.updateAttr(cartItem);
         if (count > 0) {
             return CommonResult.success(count);

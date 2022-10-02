@@ -1,5 +1,6 @@
 package com.macro.mall.portal.service.impl;
 
+import com.macro.mall.common.enums.DefaultStatus;
 import com.macro.mall.mapper.UmsMemberReceiveAddressMapper;
 import com.macro.mall.model.UmsMember;
 import com.macro.mall.model.UmsMemberReceiveAddress;
@@ -21,6 +22,7 @@ public class UmsMemberReceiveAddressServiceImpl implements UmsMemberReceiveAddre
     private UmsMemberService memberService;
     @Autowired
     private UmsMemberReceiveAddressMapper addressMapper;
+
     @Override
     public int add(UmsMemberReceiveAddress address) {
         UmsMember currentMember = memberService.getCurrentMember();
@@ -42,17 +44,17 @@ public class UmsMemberReceiveAddressServiceImpl implements UmsMemberReceiveAddre
         UmsMember currentMember = memberService.getCurrentMember();
         UmsMemberReceiveAddressExample example = new UmsMemberReceiveAddressExample();
         example.createCriteria().andMemberIdEqualTo(currentMember.getId()).andIdEqualTo(id);
-        if(address.getDefaultStatus()==1){
+        if (address.getDefaultStatus() == 1) {
             //先将原来的默认地址去除
-            UmsMemberReceiveAddress record= new UmsMemberReceiveAddress();
+            UmsMemberReceiveAddress record = new UmsMemberReceiveAddress();
             record.setDefaultStatus(0);
             UmsMemberReceiveAddressExample updateExample = new UmsMemberReceiveAddressExample();
             updateExample.createCriteria()
                     .andMemberIdEqualTo(currentMember.getId())
                     .andDefaultStatusEqualTo(1);
-            addressMapper.updateByExampleSelective(record,updateExample);
+            addressMapper.updateByExampleSelective(record, updateExample);
         }
-        return addressMapper.updateByExampleSelective(address,example);
+        return addressMapper.updateByExampleSelective(address, example);
     }
 
     @Override
@@ -69,8 +71,20 @@ public class UmsMemberReceiveAddressServiceImpl implements UmsMemberReceiveAddre
         UmsMemberReceiveAddressExample example = new UmsMemberReceiveAddressExample();
         example.createCriteria().andMemberIdEqualTo(currentMember.getId()).andIdEqualTo(id);
         List<UmsMemberReceiveAddress> addressList = addressMapper.selectByExample(example);
-        if(!CollectionUtils.isEmpty(addressList)){
+        if (!CollectionUtils.isEmpty(addressList)) {
             return addressList.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public UmsMemberReceiveAddress getDefaultItem() {
+        var currentMember = memberService.getCurrentMember();
+        var example = new UmsMemberReceiveAddressExample();
+        example.createCriteria().andMemberIdEqualTo(currentMember.getId()).andDefaultStatusEqualTo(DefaultStatus.DEFAULT.getStatus());
+        var list = addressMapper.selectByExample(example);
+        if (!CollectionUtils.isEmpty(list)) {
+            return list.get(0);
         }
         return null;
     }

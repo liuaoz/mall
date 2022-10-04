@@ -21,6 +21,9 @@ public class UmsMember implements Serializable {
     @ApiModelProperty(value = "手机号码")
     private String phone;
 
+    @ApiModelProperty(value = "微信openid")
+    private String openid;
+
     @ApiModelProperty(value = "帐号启用状态:0->禁用；1->启用")
     private Integer status;
 
@@ -108,6 +111,14 @@ public class UmsMember implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
     }
 
     public Integer getStatus() {
@@ -226,6 +237,7 @@ public class UmsMember implements Serializable {
         sb.append(", password=").append(password);
         sb.append(", nickname=").append(nickname);
         sb.append(", phone=").append(phone);
+        sb.append(", openid=").append(openid);
         sb.append(", status=").append(status);
         sb.append(", createTime=").append(createTime);
         sb.append(", icon=").append(icon);

@@ -89,7 +89,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         return !CollectionUtils.isEmpty(umsMembers);
     }
 
-    private void createUser(String username, String password, String telephone) {
+    private void createUser(String username, String password, String telephone, String openid) {
         //没有该用户进行添加操作
         UmsMember umsMember = new UmsMember();
         umsMember.setUsername(username);
@@ -97,6 +97,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         umsMember.setPassword(Objects.nonNull(password) ? passwordEncoder.encode(password) : null);
         umsMember.setCreateTime(new Date());
         umsMember.setStatus(1);
+        umsMember.setOpenid(openid);
         //获取默认会员等级并设置
         UmsMemberLevelExample levelExample = new UmsMemberLevelExample();
         levelExample.createCriteria().andDefaultStatusEqualTo(1);
@@ -118,13 +119,13 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         if (exists(username, telephone)) {
             Asserts.fail("该用户已经存在");
         }
-        createUser(username, password, telephone);
+        createUser(username, password, telephone, null);
     }
 
     @Override
-    public void register(String phone) {
+    public void register(String phone, String openid) {
         if (!exists(phone, phone)) {
-            createUser(phone, null, phone);
+            createUser(phone, null, phone, openid);
         }
     }
 
@@ -219,7 +220,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
             PhoneInfo phoneInfo = JSONUtil.toBean(authData, PhoneInfo.class);
             String phone = phoneInfo.getPhoneNumber();
             if (Objects.nonNull(phone)) {
-                register(phone);
+                register(phone, sessionInfo.getOpenid());
                 UserDetails userDetails = loadUserByUsername(phone);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails
                         , null, userDetails.getAuthorities());

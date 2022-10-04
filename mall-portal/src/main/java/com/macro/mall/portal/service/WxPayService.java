@@ -1,8 +1,10 @@
 package com.macro.mall.portal.service;
 
+import cn.hutool.core.util.XmlUtil;
 import com.macro.mall.common.util.SafeUtil;
-import com.macro.mall.common.util.XmlUtil;
+import com.macro.mall.model.UmsMember;
 import com.macro.mall.portal.config.WxPayConfig;
+import com.macro.mall.portal.dto.pay.UnifiedOrderDto;
 import com.macro.mall.portal.dto.pay.UnifiedOrderRespDto;
 
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.Node;
 
 
 import java.io.IOException;
@@ -29,10 +32,13 @@ public class WxPayService {
     @Autowired
     private WxPayConfig wxPayConfig;
 
+    @Autowired
+    private UmsMemberService memberService;
+
     private static final String url = "https://api.mch.weixin.qq.com/v3/pay/transactions/jsapi";
     public static final String url_unified_order = "https://api.mch.weixin.qq.com/pay/unifiedorder";
     //    private static final String notify_url = "https://www.sunoribt.com/health/pay/" + Const.NOTIFY_URL;
-    public static final String spbill_create_ip = "106.14.67.97";
+    public static final String spbill_create_ip = "183.195.43.193";
 
 
     /**
@@ -42,7 +48,11 @@ public class WxPayService {
 
         UnifiedOrderRespDto respDto;
 
-        String body = assembleBody(totalFee, orderNo, null);
+        UmsMember currentMember = memberService.getCurrentMember();
+
+        String body = assembleBody(totalFee, orderNo, currentMember.getOpenid());
+
+        LOGGER.info("body={}", body);
 
         HttpClient client = HttpClient.newBuilder().build();
 
@@ -57,7 +67,9 @@ public class WxPayService {
             int statusCode = response.statusCode();
             if (HttpStatus.valueOf(statusCode).is2xxSuccessful()) {
                 LOGGER.info("unified order response: {}", response.body());
-                respDto = XmlUtil.convertXmlStrToObject(UnifiedOrderRespDto.class, response.body());
+                Node node = XmlUtil.parseXml(response.body());
+                respDto = cn.hutool.core.util.XmlUtil.xmlToBean(node, UnifiedOrderRespDto.class);
+//                respDto = XmlUtil.convertXmlStrToObject(UnifiedOrderRespDto.class, response.body());
             } else {
                 LOGGER.error("unified order response code:" + statusCode);
                 return null;

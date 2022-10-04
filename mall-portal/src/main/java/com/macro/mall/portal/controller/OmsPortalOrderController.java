@@ -5,10 +5,13 @@ import com.macro.mall.common.api.CommonResult;
 import com.macro.mall.portal.domain.ConfirmOrderResult;
 import com.macro.mall.portal.domain.OmsOrderDetail;
 import com.macro.mall.portal.domain.OrderParam;
+import com.macro.mall.portal.dto.pay.PrepayDto;
+import com.macro.mall.portal.dto.pay.UnifiedOrderRespDto;
 import com.macro.mall.portal.service.OmsPortalOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +41,15 @@ public class OmsPortalOrderController {
     public CommonResult<Map<String, Object>> generateOrder(@RequestBody OrderParam orderParam) {
         Map<String, Object> result = portalOrderService.generateOrder(orderParam);
         return CommonResult.success(result, "下单成功");
+    }
+
+    @ApiOperation("预支付")
+    @PostMapping("/prepay/{orderId}")
+    public CommonResult<PrepayDto> prepay(@PathVariable Long orderId) {
+        UnifiedOrderRespDto respDto = portalOrderService.prePay(orderId);
+        PrepayDto prepayDto = new PrepayDto();
+        BeanUtils.copyProperties(respDto, prepayDto);
+        return CommonResult.success(prepayDto);
     }
 
     @ApiOperation("用户支付成功的回调")

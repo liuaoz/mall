@@ -1,7 +1,7 @@
 package com.macro.mall.portal.service;
 
-import cn.hutool.core.util.XmlUtil;
 import com.macro.mall.common.util.SafeUtil;
+import com.macro.mall.common.util.XmlUtil;
 import com.macro.mall.model.UmsMember;
 import com.macro.mall.portal.config.WxPayConfig;
 import com.macro.mall.portal.dto.pay.UnifiedOrderDto;
@@ -67,9 +67,7 @@ public class WxPayService {
             int statusCode = response.statusCode();
             if (HttpStatus.valueOf(statusCode).is2xxSuccessful()) {
                 LOGGER.info("unified order response: {}", response.body());
-                Node node = XmlUtil.parseXml(response.body());
-                respDto = cn.hutool.core.util.XmlUtil.xmlToBean(node, UnifiedOrderRespDto.class);
-//                respDto = XmlUtil.convertXmlStrToObject(UnifiedOrderRespDto.class, response.body());
+                respDto = XmlUtil.convertXmlStrToObject(UnifiedOrderRespDto.class, response.body());
             } else {
                 LOGGER.error("unified order response code:" + statusCode);
                 return null;
@@ -101,9 +99,9 @@ public class WxPayService {
         );
 
 
-        String sign = SafeUtil.byteToHexString(SafeUtil.encryptMD5(temp.getBytes(StandardCharsets.UTF_8))).toUpperCase();
+        String sign = SafeUtil.md5(temp).toUpperCase();
 
-        String body = "<xml>"
+        return "<xml>"
                 + "<appid>" + wxPayConfig.getAppid() + "</appid>"
                 + "<body>" + goodDesc + "</body>"
                 + "<mch_id>" + wxPayConfig.getMchId() + "</mch_id>"
@@ -116,8 +114,6 @@ public class WxPayService {
                 + "<trade_type>" + tradeType + "</trade_type>"
                 + "<sign>" + sign + "</sign>"
                 + "</xml>";
-
-        return body;
     }
 
 

@@ -8,6 +8,7 @@ import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -44,6 +45,8 @@ import java.util.Map;
 public final class SafeUtil {
 
     private static final Logger log = LoggerFactory.getLogger(SafeUtil.class);
+
+    private static final char[] HEX_CHARS = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
     public final static String ALGORITHM_MD5 = "MD5";
 
@@ -173,6 +176,16 @@ public final class SafeUtil {
      */
     public static String encryptBASE64(byte[] dataBytes) {
         return Base64.getEncoder().encodeToString(dataBytes);
+    }
+
+    public static String md5(String src) {
+        try {
+            MessageDigest instance = MessageDigest.getInstance(ALGORITHM_MD5);
+            byte[] digest = instance.digest(src.getBytes(StandardCharsets.UTF_8));
+            return new String(encodeHex(digest));
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(ALGORITHM_MD5 + "算法不存在");
+        }
     }
 
     /**
@@ -897,6 +910,16 @@ public final class SafeUtil {
             result[i] = (byte) (high * 16 + low);
         }
         return result;
+    }
+
+    private static char[] encodeHex(byte[] bytes) {
+        char[] chars = new char[32];
+        for (int i = 0; i < chars.length; i += 2) {
+            byte b = bytes[i / 2];
+            chars[i] = HEX_CHARS[b >>> 4 & 15];
+            chars[i + 1] = HEX_CHARS[b & 15];
+        }
+        return chars;
     }
 
     /**

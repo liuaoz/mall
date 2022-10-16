@@ -25,4 +25,4 @@
 /.nb-gradle/
 
 ### portal
-application.yml
+mall-portal/src/main/resources/application.yml

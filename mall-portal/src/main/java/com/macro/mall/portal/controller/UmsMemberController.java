@@ -2,6 +2,7 @@ package com.macro.mall.portal.controller;
 
 import cn.hutool.Hutool;
 import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.IErrorCode;
 import com.macro.mall.common.util.SafeUtil;
 import com.macro.mall.model.UmsMember;
 import com.macro.mall.portal.domain.LoginInfo;
@@ -48,8 +49,9 @@ public class UmsMemberController {
         if (Objects.nonNull(token)) {
             var member = memberService.getCurrentMember();
             tokenMap.put("username", member.getUsername());
+            return CommonResult.success(tokenMap);
         }
-        return CommonResult.success(tokenMap);
+        return CommonResult.failed("登录失败");
     }
 
     @ApiOperation("会员注册")

@@ -93,7 +93,7 @@ public class WxPayService {
                 "openid=" + userOpenId,
                 "out_trade_no=" + orderNo,
                 "spbill_create_ip=" + spbill_create_ip,
-                "total_fee=" + totalFee,
+                "total_fee=" + (totalFee * 100),
                 "trade_type=" + tradeType,
                 "key=" + wxPayConfig.getKey()
         );

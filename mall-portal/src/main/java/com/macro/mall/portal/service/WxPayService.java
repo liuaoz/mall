@@ -16,6 +16,7 @@ import org.w3c.dom.Node;
 
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -44,13 +45,14 @@ public class WxPayService {
     /**
      * 统一下单
      */
-    public UnifiedOrderRespDto unifiedOrder(int totalFee, String orderNo) {
+    public UnifiedOrderRespDto unifiedOrder(BigDecimal totalFee, String orderNo) {
 
         UnifiedOrderRespDto respDto;
 
         UmsMember currentMember = memberService.getCurrentMember();
 
-        String body = assembleBody(totalFee * 100, orderNo, currentMember.getOpenid());
+        String body = assembleBody(new BigDecimal("100").multiply(totalFee).intValue()
+                , orderNo, currentMember.getOpenid());
 
         LOGGER.info("body={}", body);
 

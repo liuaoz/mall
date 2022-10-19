@@ -263,7 +263,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
     @Nullable
     public UnifiedOrderRespDto prePay(Long orderId) {
         OmsOrder order = getById(orderId);
-        int totalFee = order.getPayAmount().intValue();
+        BigDecimal totalFee = order.getPayAmount();
         String orderNo = order.getOrderSn();
         UnifiedOrderRespDto respDto = wxPayService.unifiedOrder(totalFee, orderNo);
 

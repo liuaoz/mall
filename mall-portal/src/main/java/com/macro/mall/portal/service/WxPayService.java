@@ -50,7 +50,7 @@ public class WxPayService {
 
         UmsMember currentMember = memberService.getCurrentMember();
 
-        String body = assembleBody(totalFee, orderNo, currentMember.getOpenid());
+        String body = assembleBody(totalFee * 100, orderNo, currentMember.getOpenid());
 
         LOGGER.info("body={}", body);
 
@@ -93,7 +93,7 @@ public class WxPayService {
                 "openid=" + userOpenId,
                 "out_trade_no=" + orderNo,
                 "spbill_create_ip=" + spbill_create_ip,
-                "total_fee=" + (totalFee * 100),
+                "total_fee=" + totalFee,
                 "trade_type=" + tradeType,
                 "key=" + wxPayConfig.getKey()
         );

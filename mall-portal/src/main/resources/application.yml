@@ -53,11 +53,11 @@ rabbitmq:
 
 
 wx:
-  key: ${WX_KEY:xx}
+  key: ${WX_KEY:qwertyui12345678opasdfgh12345678}
   privateKey: ${WX_PRIVATE_KEY:XX}
-  mchId: ${WX_MCH_ID:xx}
+  mchId: ${WX_MCH_ID:1550938701}
   mchSerialNo: ${WX_MCH_SERIAL_NO:xx}
   apiV3Key: ${WX_API_V3_KEY:xx}
-  appid: ${WX_APP_ID:xx}
-  appSecret: ${WX_APP_SECRET:xx}
-  notifyUrl: ${WX_NOTIFY_URL:xx}
+  appid: ${WX_APP_ID:wx3155c0d75306acc8}
+  appSecret: ${WX_APP_SECRET:6ccae854d21c2c3b49b33511ae59ebab}
+  notifyUrl: ${WX_NOTIFY_URL:https://www.sunoribt.com/order/paySuccess}

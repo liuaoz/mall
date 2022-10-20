@@ -7,6 +7,8 @@ import com.macro.mall.portal.domain.OmsOrderDetail;
 import com.macro.mall.portal.domain.OrderParam;
 import com.macro.mall.portal.dto.pay.PrepayDto;
 import com.macro.mall.portal.dto.pay.UnifiedOrderRespDto;
+import com.macro.mall.portal.dto.pay.wx.EncryptedRespDto;
+import com.macro.mall.portal.dto.pay.wx.WxPayNotice;
 import com.macro.mall.portal.service.OmsPortalOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -50,6 +52,22 @@ public class OmsPortalOrderController {
         PrepayDto prepayDto = new PrepayDto();
         BeanUtils.copyProperties(respDto, prepayDto);
         return CommonResult.success(prepayDto);
+    }
+
+    @PostMapping(value = "notify", consumes = "text/xml", produces = "text/xml")
+    public String notify(@RequestBody EncryptedRespDto dto) {
+        if (WxPayNotice.SUCCESS.name().equals(dto.getReturn_code())
+                && WxPayNotice.SUCCESS.name().equals(dto.getResult_code())
+                && checkSign()) {
+            portalOrderService.paySuccess(Long.valueOf(dto.getOut_trade_no()), 2);
+            return WxPayNotice.noticeSuccess();
+        }
+        return WxPayNotice.noticeFail();
+    }
+
+    private boolean checkSign() {
+        //todo
+        return true;
     }
 
     @ApiOperation("用户支付成功的回调")

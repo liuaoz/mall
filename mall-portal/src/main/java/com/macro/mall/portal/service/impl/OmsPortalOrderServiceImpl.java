@@ -264,8 +264,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
     public UnifiedOrderRespDto prePay(Long orderId) {
         OmsOrder order = getById(orderId);
         BigDecimal totalFee = order.getPayAmount();
-        String orderNo = order.getOrderSn();
-        UnifiedOrderRespDto respDto = wxPayService.unifiedOrder(totalFee, orderNo);
+        UnifiedOrderRespDto respDto = wxPayService.unifiedOrder(totalFee, orderId);
 
         Date now = new Date();
         respDto.setTime_stamp(String.valueOf(now.getTime() / 1000));

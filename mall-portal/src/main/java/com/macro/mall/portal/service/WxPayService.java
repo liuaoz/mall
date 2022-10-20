@@ -45,14 +45,14 @@ public class WxPayService {
     /**
      * 统一下单
      */
-    public UnifiedOrderRespDto unifiedOrder(BigDecimal totalFee, String orderNo) {
+    public UnifiedOrderRespDto unifiedOrder(BigDecimal totalFee, Long orderId) {
 
         UnifiedOrderRespDto respDto;
 
         UmsMember currentMember = memberService.getCurrentMember();
 
         String body = assembleBody(new BigDecimal("100").multiply(totalFee).intValue()
-                , orderNo, currentMember.getOpenid());
+                , String.valueOf(orderId), currentMember.getOpenid());
 
         LOGGER.info("body={}", body);
 

@@ -60,4 +60,4 @@ wx:
   apiV3Key: ${WX_API_V3_KEY:xx}
   appid: ${WX_APP_ID:wx3155c0d75306acc8}
   appSecret: ${WX_APP_SECRET:6ccae854d21c2c3b49b33511ae59ebab}
-  notifyUrl: ${WX_NOTIFY_URL:https://www.sunoribt.com/order/paySuccess}
+  notifyUrl: ${WX_NOTIFY_URL:https://www.sunoribt.com/order/notify}

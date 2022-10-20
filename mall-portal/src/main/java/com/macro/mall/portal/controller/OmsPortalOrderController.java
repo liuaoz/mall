@@ -54,7 +54,7 @@ public class OmsPortalOrderController {
         return CommonResult.success(prepayDto);
     }
 
-    @PostMapping(value = "notify", consumes = "text/xml", produces = "text/xml")
+    @PostMapping(value = "/notify", consumes = "text/xml", produces = "text/xml")
     public String notify(@RequestBody EncryptedRespDto dto) {
         if (WxPayNotice.SUCCESS.name().equals(dto.getReturn_code())
                 && WxPayNotice.SUCCESS.name().equals(dto.getResult_code())

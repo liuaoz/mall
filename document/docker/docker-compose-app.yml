@@ -6,7 +6,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - /data/app/mall-admin/logs:/var/logs
+      - /data/app/mall-admin/log:/var/logs
       - /etc/localtime:/etc/localtime
     environment:
       - 'TZ="Asia/Shanghai"'
@@ -18,7 +18,7 @@ services:
     ports:
       - 8081:8081
     volumes:
-      - /data/app/mall-search/logs:/var/logs
+      - /data/app/mall-search/log:/var/logs
       - /etc/localtime:/etc/localtime
     environment:
       - 'TZ="Asia/Shanghai"'
@@ -31,7 +31,7 @@ services:
     ports:
       - 8085:8085
     volumes:
-      - /data/app/mall-portal/logs:/var/logs
+      - /data/app/mall-portal/log:/var/logs
       - /etc/localtime:/etc/localtime
     environment:
       - 'TZ="Asia/Shanghai"'

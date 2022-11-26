@@ -118,8 +118,8 @@ public class OmsPortalOrderController {
     }
 
     @ApiOperation("用户确认收货")
-    @PutMapping("/confirmReceiveOrder")
-    public CommonResult confirmReceiveOrder(Long orderId) {
+    @PutMapping("/confirmReceiveOrder/{orderId}")
+    public CommonResult confirmReceiveOrder(@PathVariable Long orderId) {
         portalOrderService.confirmReceiveOrder(orderId);
         return CommonResult.success(null);
     }
